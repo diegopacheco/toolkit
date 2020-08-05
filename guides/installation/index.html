@@ -1,0 +1,1841 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A toolkit for assembling GitOps pipelines on Kubernetes">
+      
+      
+        <link rel="canonical" href="https://toolkit.fluxcd.io/guides/installation/">
+      
+      
+        <meta name="author" content="The Flux CD contributors">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.0">
+    
+    
+      
+        <title>Installation - GitOps Toolkit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.89dc9fe3.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecd4686e.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../_static/custom.css">
+    
+    
+      
+    
+    
+
+<meta property="og:url" content="https://toolkit.fluxcd.io/guides/installation/">
+
+<meta property="og:title" content="Installation - GitOps Toolkit">
+
+<meta property="og:description" content="A toolkit for assembling GitOps pipelines on Kubernetes">
+<meta property="og:image" content="https://toolkit.fluxcd.io/_files/toolkit-icon.png">
+<meta property="og:image:alt" content="GitOps Toolkit">
+<meta property="og:image:type" content="image/png">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@stefanprodan">
+<meta name="twitter:creator" content="@stefanprodan">
+
+<meta property="twitter:title" content="Installation - GitOps Toolkit">
+
+<meta name="twitter:description" content="A toolkit for assembling GitOps pipelines on Kubernetes">
+<meta name="twitter:image" content="https://toolkit.fluxcd.io/_files/toolkit-icon.png">
+<meta name="twitter:image:alt" content="GitOps Toolkit">
+
+
+  </head>
+  
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://toolkit.fluxcd.io" title="GitOps Toolkit" class="md-header-nav__button md-logo" aria-label="GitOps Toolkit">
+      
+  <img src="../../_files/flux-icon@2x.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            GitOps Toolkit
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Installation
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/fluxcd/toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fluxcd/toolkit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://toolkit.fluxcd.io" title="GitOps Toolkit" class="md-nav__button md-logo" aria-label="GitOps Toolkit">
+      
+  <img src="../../_files/flux-icon@2x.png" alt="logo">
+
+    </a>
+    GitOps Toolkit
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/fluxcd/toolkit" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fluxcd/toolkit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../get-started/" title="Get Started" class="md-nav__link">
+      Get Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Guides
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Guides" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Installation
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+      Installation
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootstrap" class="md-nav__link">
+    Bootstrap
+  </a>
+  
+    <nav class="md-nav" aria-label="Bootstrap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-and-github-enterprise" class="md-nav__link">
+    GitHub and GitHub Enterprise
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gitlab-and-gitlab-enterprise" class="md-nav__link">
+    GitLab and GitLab Enterprise
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-git-server" class="md-nav__link">
+    Generic Git Server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dev-install" class="md-nav__link">
+    Dev install
+  </a>
+  
+    <nav class="md-nav" aria-label="Dev install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-with-prometheus-and-grafana" class="md-nav__link">
+    Monitoring with Prometheus and Grafana
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../helmreleases/" title="Manage Helm Releases" class="md-nav__link">
+      Manage Helm Releases
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../notifications/" title="Setup Notifications" class="md-nav__link">
+      Setup Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../webhook-receivers/" title="Setup Webhook Receivers" class="md-nav__link">
+      Setup Webhook Receivers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sealed-secrets/" title="Sealed Secrets" class="md-nav__link">
+      Sealed Secrets
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Toolkit Components
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Toolkit Components" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Toolkit Components
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      Source Controller
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Source Controller" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Source Controller
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/source/controller/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/source/gitrepositories/" title="GitRepository CRD" class="md-nav__link">
+      GitRepository CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/source/helmrepositories/" title="HelmRepository CRD" class="md-nav__link">
+      HelmRepository CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/source/helmcharts/" title="HelmChart CRD" class="md-nav__link">
+      HelmChart CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/source/api/" title="Source API Reference" class="md-nav__link">
+      Source API Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Kustomize Controller
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Kustomize Controller" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Kustomize Controller
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/kustomize/controller/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/kustomize/kustomization/" title="Kustomization CRD" class="md-nav__link">
+      Kustomization CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/kustomize/api/" title="Kustomize API Reference" class="md-nav__link">
+      Kustomize API Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Helm Controller
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Helm Controller" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Helm Controller
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/helm/controller/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/helm/helmreleases/" title="HelmRelease CRD" class="md-nav__link">
+      HelmRelease CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/helm/api/" title="Helm API Reference" class="md-nav__link">
+      Helm API Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4">
+    
+    <label class="md-nav__link" for="nav-4-4">
+      Notification Controller
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Notification Controller" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Notification Controller
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/notification/controller/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/notification/event/" title="Event" class="md-nav__link">
+      Event
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/notification/provider/" title="Provider CRD" class="md-nav__link">
+      Provider CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/notification/alert/" title="Alert CRD" class="md-nav__link">
+      Alert CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/notification/receiver/" title="Receiver CRD" class="md-nav__link">
+      Receiver CRD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../components/notification/api/" title="Notification API Reference" class="md-nav__link">
+      Notification API Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Toolkit CLI
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Toolkit CLI" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Toolkit CLI
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_bootstrap_github/" title="Bootstrap github" class="md-nav__link">
+      Bootstrap github
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_bootstrap_gitlab/" title="Bootstrap gitlab" class="md-nav__link">
+      Bootstrap gitlab
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_check/" title="Check" class="md-nav__link">
+      Check
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_create/" title="Create" class="md-nav__link">
+      Create
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_create_kustomization/" title="Create kustomization" class="md-nav__link">
+      Create kustomization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_create_helmrelease/" title="Create helmrelease" class="md-nav__link">
+      Create helmrelease
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_create_source/" title="Create source" class="md-nav__link">
+      Create source
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_create_source_git/" title="Create source git" class="md-nav__link">
+      Create source git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_create_source_helm/" title="Create source helm" class="md-nav__link">
+      Create source helm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_delete/" title="Delete" class="md-nav__link">
+      Delete
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_delete_kustomization/" title="Delete kustomization" class="md-nav__link">
+      Delete kustomization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_delete_helmrelease/" title="Delete helmrelease" class="md-nav__link">
+      Delete helmrelease
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_delete_source/" title="Delete source" class="md-nav__link">
+      Delete source
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_delete_source_git/" title="Delete source git" class="md-nav__link">
+      Delete source git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_delete_source_helm/" title="Delete source helm" class="md-nav__link">
+      Delete source helm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_export/" title="Export" class="md-nav__link">
+      Export
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_export_kustomization/" title="Export kustomization" class="md-nav__link">
+      Export kustomization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_export_helmrelease/" title="Export helmrelease" class="md-nav__link">
+      Export helmrelease
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_export_source/" title="Export source" class="md-nav__link">
+      Export source
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_export_source_git/" title="Export source git" class="md-nav__link">
+      Export source git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_export_source_helm/" title="Export source helm" class="md-nav__link">
+      Export source helm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_get/" title="Get" class="md-nav__link">
+      Get
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_get_kustomizations/" title="Get kustomizations" class="md-nav__link">
+      Get kustomizations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_get_helmreleases/" title="Get helmreleases" class="md-nav__link">
+      Get helmreleases
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_get_sources/" title="Get sources" class="md-nav__link">
+      Get sources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_get_sources_git/" title="Get sources git" class="md-nav__link">
+      Get sources git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_get_sources_helm/" title="Get sources helm" class="md-nav__link">
+      Get sources helm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_install/" title="Install" class="md-nav__link">
+      Install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_resume/" title="Resume" class="md-nav__link">
+      Resume
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_resume_kustomization/" title="Resume kustomization" class="md-nav__link">
+      Resume kustomization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_resume_helmrelease/" title="Resume helmrelease" class="md-nav__link">
+      Resume helmrelease
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_suspend/" title="Suspend" class="md-nav__link">
+      Suspend
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_suspend_kustomization/" title="Suspend kustomization" class="md-nav__link">
+      Suspend kustomization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_suspend_helmrelease/" title="Suspend helmrelease" class="md-nav__link">
+      Suspend helmrelease
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_reconcile/" title="Reconcile" class="md-nav__link">
+      Reconcile
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_reconcile_kustomization/" title="Reconcile kustomization" class="md-nav__link">
+      Reconcile kustomization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_reconcile_helmrelease/" title="Reconcile helmrelease" class="md-nav__link">
+      Reconcile helmrelease
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_reconcile_source/" title="Reconcile source" class="md-nav__link">
+      Reconcile source
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_reconcile_source_git/" title="Reconcile source git" class="md-nav__link">
+      Reconcile source git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_reconcile_source_helm/" title="Reconcile source helm" class="md-nav__link">
+      Reconcile source helm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cmd/tk_uninstall/" title="Uninstall" class="md-nav__link">
+      Uninstall
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../roadmap/" title="Roadmap" class="md-nav__link">
+      Roadmap
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Dev Guides
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Dev Guides" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Dev Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev-guides/source-watcher/" title="Watching for source changes" class="md-nav__link">
+      Watching for source changes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootstrap" class="md-nav__link">
+    Bootstrap
+  </a>
+  
+    <nav class="md-nav" aria-label="Bootstrap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-and-github-enterprise" class="md-nav__link">
+    GitHub and GitHub Enterprise
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gitlab-and-gitlab-enterprise" class="md-nav__link">
+    GitLab and GitLab Enterprise
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-git-server" class="md-nav__link">
+    Generic Git Server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dev-install" class="md-nav__link">
+    Dev install
+  </a>
+  
+    <nav class="md-nav" aria-label="Dev install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-with-prometheus-and-grafana" class="md-nav__link">
+    Monitoring with Prometheus and Grafana
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
+<p>This guide walks you through setting up the GitOps Toolkit 
+to manage one or more Kubernetes clusters.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>You will need a Kubernetes cluster version <strong>1.16</strong> or newer
+and kubectl version <strong>1.18</strong> or newer.</p>
+<p>Install the toolkit CLI with:</p>
+<div class="highlight"><pre><span></span><code>curl -s https://toolkit.fluxcd.io/install.sh <span class="p">|</span> sudo bash
+</code></pre></div>
+
+<p>The install script downloads the tk binary to <code>/usr/local/bin</code>.
+Binaries for macOS and Linux AMD64 are available for download on the 
+<a href="https://github.com/fluxcd/toolkit/releases">release page</a>.</p>
+<p>Verify that your cluster satisfies the prerequisites with:</p>
+<div class="highlight"><pre><span></span><code>tk check --pre
+</code></pre></div>
+
+<h2 id="bootstrap">Bootstrap<a class="headerlink" href="#bootstrap" title="Permanent link">&para;</a></h2>
+<p>Using the <code>tk bootstrap</code> command you can install the toolkit on a Kubernetes cluster 
+and configure it to manage itself from a Git repository.</p>
+<p>The bootstrap creates a Git repository if one doesn't exist and
+commits the toolkit components manifests to the master branch.
+Then it configures the target cluster to synchronize with that
+repository by setting up SSH deploy keys.</p>
+<p>If the toolkit components are present on the cluster,
+the bootstrap command will perform an upgrade if needed.
+The bootstrap is idempotent, it's safe to run the command as many times as you want.</p>
+<p>You can choose what components to install and for which cluster with:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap &lt;GIT-PROVIDER&gt; <span class="se">\</span>
+  --components<span class="o">=</span>source-controller,kustomize-controller,helm-controller,notification-controller <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster <span class="se">\</span>
+  --version<span class="o">=</span>latest
+</code></pre></div>
+
+<p>If you wish to install a specific version, use the toolkit 
+<a href="https://github.com/fluxcd/toolkit/releases">release tag</a> e.g. <code>--version=v0.0.14</code>.</p>
+<p>With <code>--path</code> you can configure the directory which will be used to reconcile the target cluster.
+To control multiple clusters from the same Git repository, you have to set a unique path per
+cluster e.g. <code>staging-cluster</code> and <code>production-cluster</code>:</p>
+<div class="highlight"><pre><span></span><code>├── staging-cluster <span class="c1"># &lt;- path=staging-cluster</span>
+│   └── gitops-system <span class="c1"># &lt;- namespace dir generated by bootstrap</span>
+│       ├── toolkit-components.yaml
+│       ├── toolkit-kustomization.yaml
+│       └── toolkit-source.yaml
+└── production-cluster <span class="c1"># &lt;- path=production-cluster</span>
+    └── gitops-system
+</code></pre></div>
+
+<h3 id="github-and-github-enterprise">GitHub and GitHub Enterprise<a class="headerlink" href="#github-and-github-enterprise" title="Permanent link">&para;</a></h3>
+<p>Generate a <a href="https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line">personal access token</a>
+that can create repositories by checking all permissions under <code>repo</code>.</p>
+<p>Export your GitHub personal access token as an environment variable:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GITHUB_TOKEN</span><span class="o">=</span>&lt;your-token&gt;
+</code></pre></div>
+
+<p>Run the bootstrap for a repository on your personal GitHub account:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap github <span class="se">\</span>
+  --owner<span class="o">=</span>my-github-username <span class="se">\</span>
+  --repository<span class="o">=</span>my-repository <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster <span class="se">\</span>
+  --personal
+</code></pre></div>
+
+<p>Run the bootstrap for a repository owned by a GitHub organization:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap github <span class="se">\</span>
+  --owner<span class="o">=</span>my-github-organization <span class="se">\</span>
+  --repository<span class="o">=</span>my-repository <span class="se">\</span>
+  --team<span class="o">=</span>team1-slug <span class="se">\</span>
+  --team<span class="o">=</span>team2-slug <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster
+</code></pre></div>
+
+<p>When you specify a list of teams, those teams will be granted maintainer access to the repository.</p>
+<p>To run the bootstrap for a repository hosted on GitHub Enterprise, you have to specify your GitHub hostname:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap github <span class="se">\</span>
+  --hostname<span class="o">=</span>my-github-enterprise.com <span class="se">\</span>
+  --owner<span class="o">=</span>my-github-organization <span class="se">\</span>
+  --repository<span class="o">=</span>my-repository <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster
+</code></pre></div>
+
+<h3 id="gitlab-and-gitlab-enterprise">GitLab and GitLab Enterprise<a class="headerlink" href="#gitlab-and-gitlab-enterprise" title="Permanent link">&para;</a></h3>
+<p>Generate a <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html">personal access token</a>
+that grants complete read/write access to the GitLab API.</p>
+<p>Export your GitLab personal access token as an environment variable:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GITLAB_TOKEN</span><span class="o">=</span>&lt;your-token&gt;
+</code></pre></div>
+
+<p>Run the bootstrap for a repository on your personal GitLab account:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap gitlab <span class="se">\</span>
+  --owner<span class="o">=</span>my-gitlab-username <span class="se">\</span>
+  --repository<span class="o">=</span>my-repository <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster <span class="se">\</span>
+  --personal
+</code></pre></div>
+
+<p>Run the bootstrap for a repository owned by a GitLab group:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap gitlab <span class="se">\</span>
+  --owner<span class="o">=</span>my-gitlab-group <span class="se">\</span>
+  --repository<span class="o">=</span>my-repository <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster
+</code></pre></div>
+
+<p>To run the bootstrap for a repository hosted on GitLab on-prem or enterprise, you have to specify your GitLab hostname:</p>
+<div class="highlight"><pre><span></span><code>tk bootstrap gitlab <span class="se">\</span>
+  --hostname<span class="o">=</span>my-gitlab.com <span class="se">\</span>
+  --owner<span class="o">=</span>my-gitlab-group <span class="se">\</span>
+  --repository<span class="o">=</span>my-repository <span class="se">\</span>
+  --path<span class="o">=</span>my-cluster
+</code></pre></div>
+
+<h3 id="generic-git-server">Generic Git Server<a class="headerlink" href="#generic-git-server" title="Permanent link">&para;</a></h3>
+<p>For other Git providers such as Bitbucket, Gogs, Gitea, etc you can manually setup the repository and the deploy key.</p>
+<p>Create a Git repository and clone it locally:</p>
+<div class="highlight"><pre><span></span><code>git clone ssh://&lt;host&gt;/&lt;org&gt;/my-repository
+<span class="nb">cd</span> my-repository
+</code></pre></div>
+
+<p>Create a directory inside the repository:</p>
+<div class="highlight"><pre><span></span><code>mkdir -p ./my-cluster/gitops-system
+</code></pre></div>
+
+<p>Generate the toolkit manifests with:</p>
+<div class="highlight"><pre><span></span><code>tk install --version<span class="o">=</span>latest <span class="se">\</span>
+  --export &gt; ./my-cluster/gitops-system/toolkit-components.yaml
+</code></pre></div>
+
+<p>If your cluster must pull images from a private container registry, first you should pull
+the toolkit images from Docker Hub and push them to your registry, for example:</p>
+<div class="highlight"><pre><span></span><code>docker pull fluxcd/source-controller:v0.0.7
+docker tag fluxcd/source-controller:v0.0.7 registry.internal/fluxcd/source-controller:v0.0.7
+docker push registry.internal/fluxcd/source-controller:v0.0.7
+</code></pre></div>
+
+<p>Create the pull secret in the <code>gitops-system</code> namespace:</p>
+<div class="highlight"><pre><span></span><code>kubectl create ns gitops-system
+
+kubectl -n gitops-system create secret generic regcred <span class="se">\</span>
+    --from-file<span class="o">=</span>.dockerconfigjson<span class="o">=</span>/.docker/config.json <span class="se">\</span>
+    --type<span class="o">=</span>kubernetes.io/dockerconfigjson
+</code></pre></div>
+
+<p>Set your registry domain, and the pull secret when generating the manifests:</p>
+<div class="highlight"><pre><span></span><code>tk install --version<span class="o">=</span>latest <span class="se">\</span>
+  --registry<span class="o">=</span>registry.internal/fluxcd <span class="se">\</span>
+  --image-pull-secret<span class="o">=</span>regcred <span class="se">\</span>
+  --export &gt; ./my-cluster/gitops-system/toolkit-components.yaml
+</code></pre></div>
+
+<p>Commit and push the manifest to the master branch:</p>
+<div class="highlight"><pre><span></span><code>git add -A <span class="o">&amp;&amp;</span> git commit -m <span class="s2">&quot;add toolkit manifests&quot;</span> <span class="o">&amp;&amp;</span> git push
+</code></pre></div>
+
+<p>Apply the manifests on your cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f ./my-cluster/gitops-system/toolkit-components.yaml
+</code></pre></div>
+
+<p>Verify that the toolkit controllers have started:</p>
+<div class="highlight"><pre><span></span><code>tk check
+</code></pre></div>
+
+<p>Create a <code>GitRepository</code> object on your cluster by specifying the SSH address of your repo:</p>
+<div class="highlight"><pre><span></span><code>tk create <span class="nb">source</span> git gitops-system <span class="se">\</span>
+  --url<span class="o">=</span> ssh://&lt;host&gt;/&lt;org&gt;/my-repository <span class="se">\</span>
+  --ssh-key-algorithm<span class="o">=</span>ecdsa <span class="se">\</span>
+  --ssh-ecdsa-curve<span class="o">=</span>p521 <span class="se">\</span>
+  --branch<span class="o">=</span>master <span class="se">\</span>
+  --interval<span class="o">=</span>1m
+</code></pre></div>
+
+<p>You will be prompted to add a deploy key to your repository.
+If you don't specify the SSH algorithm, then tk will generate an RSA 2048 bits key.</p>
+<p>If your Git server supports basic auth, you can set the URL to HTTPS and specify the credentials with:</p>
+<div class="highlight"><pre><span></span><code>tk create <span class="nb">source</span> git gitops-system <span class="se">\</span>
+  --url<span class="o">=</span>https://&lt;host&gt;/&lt;org&gt;/my-repository <span class="se">\</span>
+  --username<span class="o">=</span>my-username <span class="se">\</span>
+  --password<span class="o">=</span>my-password <span class="se">\</span>
+  --branch<span class="o">=</span>master <span class="se">\</span>
+  --interval<span class="o">=</span>1m
+</code></pre></div>
+
+<p>Create a <code>Kustomization</code> object on your cluster:</p>
+<div class="highlight"><pre><span></span><code>tk create kustomization gitops-system <span class="se">\</span>
+  --source<span class="o">=</span>gitops-system <span class="se">\</span>
+  --path<span class="o">=</span><span class="s2">&quot;./my-cluster&quot;</span> <span class="se">\</span>
+  --prune<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  --interval<span class="o">=</span>10m
+</code></pre></div>
+
+<p>Export both objects, commit and push the manifests to Git:</p>
+<div class="highlight"><pre><span></span><code>tk <span class="nb">export</span> <span class="nb">source</span> git gitops-system <span class="se">\</span>
+  &gt; ./my-cluster/gitops-system/toolkit-source.yaml
+
+tk <span class="nb">export</span> kustomization gitops-system <span class="se">\</span>
+  &gt; ./my-cluster/gitops-system/toolkit-kustomization.yaml
+
+git add -A <span class="o">&amp;&amp;</span> git commit -m <span class="s2">&quot;add toolkit reconciliation&quot;</span> <span class="o">&amp;&amp;</span> git push
+</code></pre></div>
+
+<p>To upgrade the toolkit to a newer version, run the install command and commit the changes:</p>
+<div class="highlight"><pre><span></span><code>tk install --version<span class="o">=</span>latest <span class="se">\</span>
+  --export &gt; ./my-cluster/gitops-system/toolkit-components.yaml
+
+git add -A <span class="o">&amp;&amp;</span> git commit -m <span class="s2">&quot;update toolkit&quot;</span> <span class="o">&amp;&amp;</span> git push
+</code></pre></div>
+
+<p>The source-controller will pull the changes on the cluster, then the kustomize-controller
+will perform a rolling update of all toolkit components including itself.</p>
+<h2 id="dev-install">Dev install<a class="headerlink" href="#dev-install" title="Permanent link">&para;</a></h2>
+<p>For testing purposes you can install the toolkit without storing its manifests in a Git repository.</p>
+<p>Here is the equivalent to <code>fluxctl install</code>:</p>
+<div class="highlight"><pre><span></span><code>tk install <span class="se">\</span>
+  --components<span class="o">=</span>source-controller,kustomize-controller
+</code></pre></div>
+
+<p>Then you can register Git repositories and reconcile them on your cluster:</p>
+<div class="highlight"><pre><span></span><code>tk create <span class="nb">source</span> git podinfo <span class="se">\</span>
+  --url<span class="o">=</span>https://github.com/stefanprodan/podinfo <span class="se">\</span>
+  --tag-semver<span class="o">=</span><span class="s2">&quot;&gt;=4.0.0&quot;</span> <span class="se">\</span>
+  --interval<span class="o">=</span>1m
+
+tk create kustomization podinfo-default <span class="se">\</span>
+  --source<span class="o">=</span>podinfo <span class="se">\</span>
+  --path<span class="o">=</span><span class="s2">&quot;./kustomize&quot;</span> <span class="se">\</span>
+  --prune<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  --validation<span class="o">=</span>client <span class="se">\</span>
+  --interval<span class="o">=</span>10m <span class="se">\</span>
+  --health-check<span class="o">=</span><span class="s2">&quot;Deployment/podinfo.default&quot;</span> <span class="se">\</span>
+  --health-check-timeout<span class="o">=</span>2m
+</code></pre></div>
+
+<p>Here is the equivalent to <code>helm install helm-operator</code>:</p>
+<div class="highlight"><pre><span></span><code>tk install <span class="se">\</span>
+  --components<span class="o">=</span>source-controller,kustomize-controller,helm-controller
+</code></pre></div>
+
+<p>Then you can register Helm repositories and create Helm releases:</p>
+<div class="highlight"><pre><span></span><code>tk create <span class="nb">source</span> helm stable <span class="se">\</span>
+--interval<span class="o">=</span>1h <span class="se">\</span>
+--url<span class="o">=</span>https://kubernetes-charts.storage.googleapis.com
+
+tk create helmrelease sealed-secrets <span class="se">\</span>
+--interval<span class="o">=</span>1h <span class="se">\</span>
+--release-name<span class="o">=</span>sealed-secrets <span class="se">\</span>
+--target-namespace<span class="o">=</span>gitops-system <span class="se">\</span>
+--source<span class="o">=</span>stable <span class="se">\</span>
+--chart-name<span class="o">=</span>sealed-secrets <span class="se">\</span>
+--chart-version<span class="o">=</span><span class="s2">&quot;^1.10.0&quot;</span>
+</code></pre></div>
+
+<h3 id="monitoring-with-prometheus-and-grafana">Monitoring with Prometheus and Grafana<a class="headerlink" href="#monitoring-with-prometheus-and-grafana" title="Permanent link">&para;</a></h3>
+<p>The GitOps Toolkit comes with an optional monitoring stack.
+You can install the stack in the <code>gitops-system</code> namespace with:</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kustomize build github.com/fluxcd/toolkit/manifests/monitoring?ref=master | kubectl apply -f-</span>
+</code></pre></div>
+
+<p>The monitoring stack is composed of:</p>
+<ul>
+<li>Prometheus server - collects metrics from the toolkit controllers and stores them for 2h</li>
+<li>Grafana dashboards - displays the control plane resource usage and reconciliation stats</li>
+</ul>
+<p><img alt="" src="../../_files/cp-dashboard-p1.png" /></p>
+<p><img alt="" src="../../_files/cp-dashboard-p2.png" /></p>
+<p>If you wish to use your own Prometheus and Grafana instances, then you can import the dashboards from
+<a href="https://github.com/fluxcd/toolkit/tree/master/manifests/monitoring/grafana/dashboards">GitHub</a>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Note that the toolkit controllers expose the <code>/metrics</code> endpoint on port <code>8080</code>.
+When using Prometheus Operator you should create <code>PodMonitor</code> objects to configure scraping.
+When Prometheus is running outside of the <code>gitops-system</code> namespace, you have to create a network policy
+that allows traffic on port <code>8080</code> from the namespace where Prometheus is deployed.</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../get-started/" title="Get Started" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Get Started
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../helmreleases/" title="Manage Helm Releases" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Manage Helm Releases
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.36cbf620.min.js"></script>
+      <script src="../../assets/javascripts/bundle.00c583dd.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.7f7c8775.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
